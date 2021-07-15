@@ -25,6 +25,12 @@ namespace riddle_crud_application.Controllers
             return View(await _context.Riddle.ToListAsync());
         }
 
+        // GET: Riddles/ShowSearchForm
+        public async Task<IActionResult> ShowSearchForm()
+        {
+            return View();
+        }
+
         // GET: Riddles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
