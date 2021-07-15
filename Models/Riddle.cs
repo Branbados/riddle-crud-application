@@ -10,5 +10,9 @@ namespace riddle_crud_application.Models
         public int id { get; set; }
         public string RiddleQuestion { get; set; }
         public string RiddleAnswer { get; set; }
+        public Riddle()
+        {
+
+        }
     }
 }
