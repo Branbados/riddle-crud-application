@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,12 @@ namespace riddle_crud_application.Controllers
             return View();
         }
 
+        // POST: Riddles/ShowSearchResult
+        public async Task<IActionResult> ShowSearchResult(string SearchPhrase)
+        {
+            return View("Index", await _context.Riddle.Where( r=>r.RiddleQuestion.Contains(SearchPhrase)).ToListAsync());
+        }
+
         // GET: Riddles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -50,6 +57,7 @@ namespace riddle_crud_application.Controllers
         }
 
         // GET: Riddles/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -58,6 +66,7 @@ namespace riddle_crud_application.Controllers
         // POST: Riddles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,RiddleQuestion,RiddleAnswer")] Riddle riddle)
@@ -72,6 +81,7 @@ namespace riddle_crud_application.Controllers
         }
 
         // GET: Riddles/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,6 +100,7 @@ namespace riddle_crud_application.Controllers
         // POST: Riddles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,RiddleQuestion,RiddleAnswer")] Riddle riddle)
@@ -123,6 +134,7 @@ namespace riddle_crud_application.Controllers
         }
 
         // GET: Riddles/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,6 +153,7 @@ namespace riddle_crud_application.Controllers
         }
 
         // POST: Riddles/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
